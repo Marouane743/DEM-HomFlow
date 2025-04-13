@@ -225,4 +225,3 @@ g++ -o hopper_flow DEMSimulations/Hopper_flow_DEMEngine.cpp -std=c++17 -I/path/t
 ## References
 
 1. Goldhirsch, I. (2010). Stress, stress asymmetry and couple stress: from discrete particles to continuous fields. *Granular Matter*, 12(3), 239-252.
-2. Lucy, L. B. (1977). A numerical approach to the testing of the fission hypothesis. *The Astronomical Journal*, 82, 1013-1024.

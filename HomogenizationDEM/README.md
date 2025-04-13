@@ -14,11 +14,12 @@ HomogenizationDEM is a computational framework for applying the Goldhirsch homog
 
 ## Project Architecture
 
-The project consists of three main components:
+The project consists of four main components:
 
 1. **Integral Computation (`computing_X_v3.c`)**: Pre-computes integral lookup tables for efficient homogenization
 2. **Homogenization Process (`homogenization_nv1.c`)**: Processes DEM simulation data to calculate continuum fields
 3. **Shared Configuration (`shared_config.h`)**: Contains common parameters and constants used by both components
+4. **DEM Simulation (`Hopper_flow_DEMEngine.cpp`)**: Generates particle flow data through a hopper system for analysis
 
 ### Directory Structure
 
@@ -29,7 +30,10 @@ HomogenizationDEM/
 ├── shared_config.h          # Shared configuration header
 ├── integrals_csv/           # Directory for storing integral lookup tables
 ├── DEM_data/                # Default input directory for DEM simulation data
-└── output_data/             # Default output directory for homogenized fields
+├── output_data/             # Default output directory for homogenized fields
+└── validate.py              # Validation script for homogenization results
+
+Hopper_flow_DEMEngine.cpp   # DEM simulation for generating particle flow data
 ```
 
 ## Theoretical Background
@@ -128,12 +132,37 @@ Where:
 - `start_index`: First DEM data file index to process (optional, default: 0)
 - `end_index`: Last DEM data file index to process (optional, default: 9999)
 
+## DEM Simulation
+
+The `Hopper_flow_DEMEngine.cpp` file provides a complete Discrete Element Method simulation of granular flow through a hopper system. This simulation generates the particle data that can be processed by the homogenization framework.
+
+### Simulation Features
+
+- **Hopper Geometry**: Customizable funnel with adjustable dimensions and gate opening
+- **Particle Properties**: Configurable particle size, density, and material properties
+- **Multi-phase Simulation**:
+  - Settling phase: Particles are generated and allowed to settle under gravity
+  - Flow phase: The gate opens and particles flow through the hopper
+- **Data Output**: Generates position, velocity, and contact force data compatible with the homogenization framework
+- **Visualization**: Outputs mesh and particle data in formats suitable for visualization tools
+
+### Compilation and Execution
+
+```bash
+g++ -o hopper_flow Hopper_flow_DEMEngine.cpp -std=c++17 -I/path/to/dem/engine/include -L/path/to/dem/engine/lib -ldem
+```
+
+```bash
+./hopper_flow
+```
+
 ## Performance Considerations
 
 - The integral computation is computationally intensive but only needs to be performed once
 - OpenMP parallelization significantly speeds up the integral computation
 - The homogenization process scales with the number of particles and grid points
 - Memory usage depends on the grid resolution and number of particles
+- The DEM simulation is computationally intensive and may benefit from GPU acceleration if available
 
 ## References
 

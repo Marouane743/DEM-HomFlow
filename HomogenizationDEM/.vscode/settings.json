@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        ".fantomasignore": "ignore",
+        "*.xsd": "xml",
+        "shared_config.h": "c",
+        "stat.h": "c",
+        "types.h": "c"
+    }
+}

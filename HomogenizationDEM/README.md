@@ -4,8 +4,7 @@
 
 HomogenizationDEM is a computational framework for applying the Goldhirsch homogenization method to Discrete Element Method (DEM) simulations. This project enables the calculation of continuum fields (density, velocity, stress tensor, and viscosity) from discrete particle data, providing a bridge between microscopic particle interactions and macroscopic material behavior.
 
-![DEM Visualization](dem_visualization.png)
-*Visualization of a DEM simulation with density field represented by color gradient*
+
 
 ## Author
 

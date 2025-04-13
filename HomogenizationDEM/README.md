@@ -13,12 +13,14 @@ HomogenizationDEM is a computational framework for applying the Goldhirsch homog
 
 ## Project Architecture
 
-The project consists of four main components:
+The project consists of six main components:
 
 1. **Integral Computation (`computing_X_v3.c`)**: Pre-computes integral lookup tables for efficient homogenization
 2. **Homogenization Process (`homogenization_nv1.c`)**: Processes DEM simulation data to calculate continuum fields
 3. **Shared Configuration (`shared_config.h`)**: Contains common parameters and constants used by both components
 4. **DEM Simulation (`Hopper_flow_DEMEngine.cpp`)**: Generates particle flow data through a hopper system for analysis
+5. **Validation Tool (`validate.py`)**: Validates homogenization results against theoretical expectations
+6. **Visualization Tool (`visualize.py`)**: Creates visual representations of particles and homogenized fields
 
 ### Directory Structure
 
@@ -30,7 +32,8 @@ HomogenizationDEM/
 ├── integrals_csv/           # Directory for storing integral lookup tables
 ├── DEM_data/                # Default input directory for DEM simulation data
 ├── output_data/             # Default output directory for homogenized fields
-└── validate.py              # Validation script for homogenization results
+├── validate.py              # Validation script for homogenization results
+└── visualize.py             # Visualization tool for homogenization results
 
 Hopper_flow_DEMEngine.cpp   # DEM simulation for generating particle flow data
 ```
@@ -131,12 +134,57 @@ Where:
 - `start_index`: First DEM data file index to process (optional, default: 0)
 - `end_index`: Last DEM data file index to process (optional, default: 9999)
 
-## DEM Simulation
+## Validation Tool (validate.py)
 
-The `Hopper_flow_DEMEngine.cpp` file provides a complete Discrete Element Method simulation of granular flow through a hopper system. This simulation generates the particle data that can be processed by the homogenization framework.
+The `validate.py` script provides a comprehensive validation framework for the homogenization results. It independently computes expected field values and compares them with the output from the homogenization process.
+
+### Validation Features
+
+- **Mathematical Validation**: Implements the Goldhirsch homogenization equations in Python for comparison
+- **Error Analysis**: Computes and reports differences between expected and actual values
+- **Configurable Tolerance**: Adjustable precision for numerical comparisons
+- **Comprehensive Testing**: Validates density, velocity, and stress tensor fields
+
+### Usage
+
+```bash
+python validate.py <RC> [<index>] [<step>]
+```
+
+Where:
+- `RC`: Cutoff radius for the weight function
+- `index`: Index of the DEM data file to validate (optional, default: 0000)
+- `step`: Grid spacing for validation (optional, default: 0.2)
+
+## Visualization Tool (visualize.py)
+
+The `visualize.py` script provides visualization capabilities for the homogenization results, allowing for intuitive interpretation of the computed fields.
+
+### Visualization Features
+
+- **Particle Visualization**: Displays particle positions and sizes
+- **Force Visualization**: Shows contact forces between particles
+- **Field Visualization**: Creates heatmaps of density, velocity, and stress fields
+- **Combined Views**: Overlays particles, forces, and grid nodes for comprehensive analysis
+
+### Usage
+
+```bash
+python visualize.py <index> [<step>] [<STF_component>]
+```
+
+Where:
+- `index`: Index of the DEM data file to visualize
+- `step`: Grid spacing for visualization (optional, default: 0.2)
+- `STF_component`: Stress tensor component to visualize (optional, default: STF_xx)
+
+## DEM Simulation (Hopper_flow_DEMEngine.cpp)
+
+The `Hopper_flow_DEMEngine.cpp` file provides a complete Discrete Element Method simulation of granular flow through a hopper system. This simulation is built on the [DEM-Engine](https://github.com/projectchrono/DEM-Engine) framework, a high-performance library for discrete element simulations. The simulation generates particle data that can be processed by the homogenization framework.
 
 ### Simulation Features
 
+- **DEM-Engine Integration**: Leverages the powerful DEM-Engine library for accurate particle dynamics
 - **Hopper Geometry**: Customizable funnel with adjustable dimensions and gate opening
 - **Particle Properties**: Configurable particle size, density, and material properties
 - **Multi-phase Simulation**:

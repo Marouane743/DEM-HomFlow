@@ -18,7 +18,7 @@ The project consists of six main components:
 1. **Integral Computation (`computing_X_v3.c`)**: Pre-computes integral lookup tables for efficient homogenization
 2. **Homogenization Process (`homogenization_nv1.c`)**: Processes DEM simulation data to calculate continuum fields
 3. **Shared Configuration (`shared_config.h`)**: Contains common parameters and constants used by both components
-4. **DEM Simulation (`Hopper_flow_DEMEngine.cpp`)**: Generates particle flow data through a hopper system for analysis
+4. **DEM Simulation (`DEMSimulations/Hopper_flow_DEMEngine.cpp`)**: Generates particle flow data through a hopper system for analysis
 5. **Validation Tool (`validate.py`)**: Validates homogenization results against theoretical expectations
 6. **Visualization Tool (`visualize.py`)**: Creates visual representations of particles and homogenized fields
 
@@ -35,7 +35,8 @@ HomogenizationDEM/
 ├── validate.py              # Validation script for homogenization results
 └── visualize.py             # Visualization tool for homogenization results
 
-Hopper_flow_DEMEngine.cpp   # DEM simulation for generating particle flow data
+DEMSimulations/
+└── Hopper_flow_DEMEngine.cpp # DEM simulation for generating particle flow data
 ```
 
 ## Theoretical Background
@@ -178,7 +179,7 @@ Where:
 - `step`: Grid spacing for visualization (optional, default: 0.2)
 - `STF_component`: Stress tensor component to visualize (optional, default: STF_xx)
 
-## DEM Simulation (Hopper_flow_DEMEngine.cpp)
+## DEM Simulation (DEMSimulations/Hopper_flow_DEMEngine.cpp)
 
 The `Hopper_flow_DEMEngine.cpp` file provides a complete Discrete Element Method simulation of granular flow through a hopper system. This simulation is built on the [DEM-Engine](https://github.com/projectchrono/DEM-Engine) framework, a high-performance library for discrete element simulations. The simulation generates particle data that can be processed by the homogenization framework.
 
@@ -196,7 +197,7 @@ The `Hopper_flow_DEMEngine.cpp` file provides a complete Discrete Element Method
 ### Compilation and Execution
 
 ```bash
-g++ -o hopper_flow Hopper_flow_DEMEngine.cpp -std=c++17 -I/path/to/dem/engine/include -L/path/to/dem/engine/lib -ldem
+g++ -o hopper_flow DEMSimulations/Hopper_flow_DEMEngine.cpp -std=c++17 -I/path/to/dem/engine/include -L/path/to/dem/engine/lib -ldem
 ```
 
 ```bash

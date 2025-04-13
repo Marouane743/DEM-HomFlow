@@ -50,7 +50,17 @@ The Goldhirsch homogenization method is a coarse-graining approach that transfor
 
 ## Workflow
 
-### Step 1: Integral Computation
+### Step 1: Generate DEM Data
+
+The `DEMSimulations/Hopper_flow_DEMEngine.cpp` program generates particle flow data using the [DEM-Engine](https://github.com/projectchrono/DEM-Engine) project:
+
+1. Sets up a hopper geometry with customizable dimensions
+2. Creates particles with specified properties
+3. Simulates particle settling under gravity
+4. Opens the hopper gate to simulate flow
+5. Outputs particle positions, velocities, and contact forces to CSV files
+
+### Step 2: Integral Computation
 
 The `computing_X_v3.c` program pre-computes integral values needed for the homogenization process:
 
@@ -59,7 +69,7 @@ The `computing_X_v3.c` program pre-computes integral values needed for the homog
 3. Stores these values in CSV files in the `integrals_csv` directory
 4. Uses OpenMP for parallel computation to speed up the process
 
-### Step 2: Homogenization
+### Step 3: Homogenization
 
 The `homogenization_nv1.c` program processes DEM simulation data:
 
@@ -181,7 +191,7 @@ Where:
 
 ## DEM Simulation (DEMSimulations/Hopper_flow_DEMEngine.cpp)
 
-The `Hopper_flow_DEMEngine.cpp` file provides a complete Discrete Element Method simulation of granular flow through a hopper system. This simulation is built on the [DEM-Engine](https://github.com/projectchrono/DEM-Engine) framework, a high-performance library for discrete element simulations. The simulation generates particle data that can be processed by the homogenization framework.
+The `Hopper_flow_DEMEngine.cpp` file provides a complete Discrete Element Method simulation of granular flow through a hopper system. This simulation is built using the [DEM-Engine](https://github.com/projectchrono/DEM-Engine) project, a high-performance library for discrete element simulations developed by Project Chrono. DEM-Engine provides the core physics engine for accurate particle dynamics, contact detection, and force calculations. The simulation generates particle data that can be processed by the homogenization framework.
 
 ### Simulation Features
 

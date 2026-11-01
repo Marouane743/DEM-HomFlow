@@ -652,8 +652,8 @@ int processSingleSet(const char *headerFile,
                     double Dxz = 0.5 * (dVx_dz + dVz_dx);
                     double Dyz = 0.5 * (dVy_dz + dVz_dy);
 
-                    // Norm of D: norm_D = sqrt(2*(Dxx^2 + Dyy^2 + Dzz^2 + Dxy^2 + Dxz^2 + Dyz^2))
-                    double norm_D = sqrt(2.0 * (Dxx*Dxx + Dyy*Dyy + Dzz*Dzz + Dxy*Dxy + Dxz*Dxz + Dyz*Dyz));
+                    // Norm of D: norm_D = sqrt(2.0 * (Dxx*Dxx + Dyy*Dyy + Dzz*Dzz + 2.0 * (Dxy*Dxy + Dxz*Dxz + Dyz*Dyz)))
+                    double norm_D = sqrt(2.0 * (Dxx*Dxx + Dyy*Dyy + Dzz*Dzz + 2.0 * (Dxy*Dxy + Dxz*Dxz + Dyz*Dyz)));
 
                     // 5. Compute viscosity: if norm_D > EPSILON, μ = norm_tau/norm_D, else 0.
                     double mu = (norm_D > EPSILON) ? norm_tau / norm_D : 0.0;
